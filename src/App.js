@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import logoLocation from "./images/icon-location.svg";
+import L from "leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "./App.css";
 
 const geoIpApiKey = process.env.REACT_APP_GEO_API_KEY;
+
+const newMapIcon = L.icon({ iconUrl: logoLocation, iconSize: [46, 56] });
 
 function App() {
   /*const [error, setError] = useState(false);
@@ -40,47 +44,47 @@ function App() {
           />
           <button>BUTTON</button>
         </form>
-      </div>
-      <div className="show-tracker-data">
-        <ul>
-          <li>
-            <div>
-              <h4 className="data-key">IP Address</h4>
-              <p className="data-value">123.333.3.3{/*ipData.ip*/}</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h4 className="data-key">Location</h4>
-              <p className="data-value">
-                Milan, Lombardia
-                {/*isLoaded
+        <div className="show-tracker-data">
+          <ul>
+            <li>
+              <div>
+                <h4 className="data-key">IP Address</h4>
+                <p className="data-value">123.333.3.3{/*ipData.ip*/}</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h4 className="data-key">Location</h4>
+                <p className="data-value">
+                  Milan, Lombardia
+                  {/*isLoaded
                   ? `${ipData.location.city}, ${ipData.location.region}`
                 : "Loading..."*/}
-              </p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h4 className="data-key">Timezone</h4>
-              <p className="data-value">
-                UTC -5:00
-                {/*isLoaded ? `${ipData.location.timezone}` : "Loading..."}
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h4 className="data-key">Timezone</h4>
+                <p className="data-value">
+                  UTC -5:00
+                  {/*isLoaded ? `${ipData.location.timezone}` : "Loading..."}
                 {/*add offset value dynamically using the API*/}
-              </p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h4 className="data-key">ISP</h4>
-              <p className="data-value">Vodafone{/*ipData.isp*/}</p>
-            </div>
-          </li>
-        </ul>
+                </p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h4 className="data-key">ISP</h4>
+                <p className="data-value">Vodafone{/*ipData.isp*/}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       {
         /*isLoaded ?*/ <MapContainer
-          style={{ height: "100vh" }}
+          style={{ height: "70vh" }}
           center={[
             51.505 /*ipData.location.lat*/,
             -0.09 /*ipData.location.lng*/,
@@ -92,6 +96,13 @@ function App() {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          <Marker
+            icon={newMapIcon}
+            position={[
+              51.505 /*ipData.location.lat*/,
+              -0.09 /*ipData.location.lng*/,
+            ]}
+          ></Marker>
         </MapContainer> /*: (
         "Loading map..."
       )*/
