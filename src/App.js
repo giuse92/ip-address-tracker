@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import logoLocation from "./images/icon-location.svg";
+import iconArrow from "./images/icon-arrow.svg";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "./App.css";
@@ -16,7 +17,7 @@ function App() {
   const getIpOnFirstLoading = async () => {
     try {
       const promise = await fetch(
-        `https://geo.ipify.org/api/v1?apiKey=${geoI}&ipAddress=`
+        `https://geo.ipify.org/api/v1?apiKey=${geoIpApiKey}&ipAddress=`
       );
       const res = await promise.json();
       if (res.code) throw new Error(res.messages);
@@ -42,7 +43,9 @@ function App() {
             placeholder="Search for any IP address or domain"
             type="text"
           />
-          <button>BUTTON</button>
+          <button>
+            <img src={iconArrow} alt="" />
+          </button>
         </form>
         <div className="show-tracker-data">
           <ul>
