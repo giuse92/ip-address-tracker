@@ -4,20 +4,22 @@ import iconArrow from "./images/icon-arrow.svg";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "./App.css";
+import Error from "./components/Error";
 
 const geoIpApiKey = process.env.REACT_APP_GEO_API_KEY;
 
 const newMapIcon = L.icon({ iconUrl: logoLocation, iconSize: [46, 56] });
 
 function App() {
-  /*const [error, setError] = useState(false);
+  const [error, setError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [ipData, setIpData] = useState([]);
+  const [inputValue, setInputValue] = useState();
 
-  const getIpOnFirstLoading = async () => {
+  const getIpOnPageFirstLoading = async () => {
     try {
       const promise = await fetch(
-        `https://geo.ipify.org/api/v1?apiKey=${geoIpApiKey}&ipAddress=`
+        `https://geo.ipify.org/api/v1?apiKey=&ipAddress=`
       );
       const res = await promise.json();
       if (res.code) throw new Error(res.messages);
@@ -31,8 +33,13 @@ function App() {
   };
 
   useEffect(() => {
-    getIpOnFirstLoading();
-  }, []);*/
+    getIpOnPageFirstLoading();
+  }, []);
+
+  const onChangeHandler = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+  };
 
   return (
     <div className="App">
@@ -52,17 +59,32 @@ function App() {
             <li>
               <div>
                 <h4 className="data-key">IP Address</h4>
-                <p className="data-value">123.333.3.3{/*ipData.ip*/}</p>
+                <p className="data-value">
+                  {isLoaded ? (
+                    error ? (
+                      <Error message="Error" />
+                    ) : (
+                      ipData.ip
+                    )
+                  ) : (
+                    "Loading..."
+                  )}
+                </p>
               </div>
             </li>
             <li>
               <div>
                 <h4 className="data-key">Location</h4>
                 <p className="data-value">
-                  Milan, Lombardia
-                  {/*isLoaded
-                  ? `${ipData.location.city}, ${ipData.location.region}`
-                : "Loading..."*/}
+                  {isLoaded ? (
+                    error ? (
+                      <Error message="Error" />
+                    ) : (
+                      `${ipData.location.city}, ${ipData.location.region}`
+                    )
+                  ) : (
+                    "Loading..."
+                  )}
                 </p>
               </div>
             </li>
@@ -70,28 +92,45 @@ function App() {
               <div>
                 <h4 className="data-key">Timezone</h4>
                 <p className="data-value">
-                  UTC -5:00
-                  {/*isLoaded ? `${ipData.location.timezone}` : "Loading..."}
-                {/*add offset value dynamically using the API*/}
+                  UTC
+                  {isLoaded ? (
+                    error ? (
+                      <Error message="Error" />
+                    ) : (
+                      `${ipData.location.timezone}`
+                    )
+                  ) : (
+                    "Loading..."
+                  )}
+                  {/*add offset value dynamically using the API*/}
                 </p>
               </div>
             </li>
             <li>
               <div>
                 <h4 className="data-key">ISP</h4>
-                <p className="data-value">Vodafone{/*ipData.isp*/}</p>
+                <p className="data-value">
+                  {isLoaded ? (
+                    error ? (
+                      <Error message="Error" />
+                    ) : (
+                      ipData.isp
+                    )
+                  ) : (
+                    "Loading..."
+                  )}
+                </p>
               </div>
             </li>
           </ul>
         </div>
       </div>
-      {
-        /*isLoaded ?*/ <MapContainer
+      {isLoaded ? (
+        <MapContainer
           style={{ height: "70vh" }}
-          center={[
-            51.505 /*ipData.location.lat*/,
-            -0.09 /*ipData.location.lng*/,
-          ]}
+          center={
+            error ? [51.505, -0.09] : [ipData.location.lat, ipData.location.lng]
+          }
           zoom={13}
           scrollWheelZoom={false}
         >
@@ -99,17 +138,16 @@ function App() {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker
-            icon={newMapIcon}
-            position={[
-              51.505 /*ipData.location.lat*/,
-              -0.09 /*ipData.location.lng*/,
-            ]}
-          ></Marker>
-        </MapContainer> /*: (
+          {!error ? (
+            <Marker
+              icon={newMapIcon}
+              position={[ipData.location.lat, ipData.location.lng]}
+            ></Marker>
+          ) : null}
+        </MapContainer>
+      ) : (
         "Loading map..."
-      )*/
-      }
+      )}
     </div>
   );
 }
