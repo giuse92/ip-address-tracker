@@ -1,7 +1,8 @@
 import React from "react";
+import "./Error.css";
 
 const Error = ({ message }) => {
-  return <div style={{ color: "red" }}>{message}</div>;
+  return <span className="error">Error: {message}</span>;
 };
 
 export default Error;

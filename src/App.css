@@ -60,7 +60,7 @@
 
 .App .search-ip form button:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgb(43, 43, 43);
 }
 
 .App .search-ip .show-tracker-data {
@@ -78,7 +78,6 @@
   padding-left: 0;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .App .search-ip .show-tracker-data ul li {
@@ -104,4 +103,13 @@
   color: #000;
   font-size: 22px;
   font-weight: 700;
+}
+
+.attribution {
+  font-size: 11px;
+  text-align: center;
+  padding-top: 10px;
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
 }
