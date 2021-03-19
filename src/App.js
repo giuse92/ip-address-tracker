@@ -6,8 +6,6 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "./App.css";
 import Error from "./components/Error";
 
-const geoIpApiKey = process.env.REACT_APP_API_KEY;
-
 function App() {
   const [error, setError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -29,7 +27,9 @@ function App() {
   };
 
   useEffect(() => {
-    getIp(`https://geo.ipify.org/api/v1?apiKey=${geoIpApiKey}&ipAddress=`);
+    getIp(
+      `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_API_KEY}&ipAddress=`
+    );
   }, []);
 
   const onChangeHandler = (e) => {
@@ -39,11 +39,27 @@ function App() {
 
   const getDomainOrIp = (e) => {
     e.preventDefault();
+    setError(false);
     setIsLoaded(false);
     getIp(
-      `https://geo.ipify.org/api/v1?apiKey=${geoIpApiKey}&domain=${inputValue}`
+      `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_API_KEY}&domain=${inputValue}`
     );
     setInputValue("");
+  };
+
+  const addOffsetValue = (timezone) => {
+    const date = new Date();
+    const apiTimezoneOffset = parseInt(timezone.replace(":", ".")) * 60;
+    const UTCTime = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds()
+    );
+    const newUTCDate = new Date(UTCTime * 1 + apiTimezoneOffset * 60 * 1000);
+    return newUTCDate;
   };
 
   return (
@@ -88,8 +104,13 @@ function App() {
                 <div>
                   <h4 className="data-key">Timezone</h4>
                   <p className="data-value">
-                    UTC
-                    {isLoaded ? `${ipData.location.timezone}` : "Loading..."}
+                    {isLoaded
+                      ? `${addOffsetValue(
+                          ipData.location.timezone
+                        ).getHours()}:${addOffsetValue(
+                          ipData.location.timezone
+                        ).getMinutes()}`
+                      : "Loading..."}
                     {/*add offset value dynamically using the API*/}
                   </p>
                 </div>
