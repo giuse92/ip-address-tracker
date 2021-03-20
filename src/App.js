@@ -68,12 +68,13 @@ function App() {
         <h1>IP Address Tracker</h1>
         <form>
           <input
+            disabled={!isLoaded}
             placeholder="Search for any IP address or domain"
             type="text"
             onChange={onChangeHandler}
             value={inputValue}
           />
-          <button onClick={getDomainOrIp}>
+          <button disabled={!isLoaded} onClick={getDomainOrIp}>
             <img src={iconArrow} alt="icon-arrow" />
           </button>
         </form>
@@ -129,7 +130,6 @@ function App() {
       </div>
       {isLoaded ? (
         <MapContainer
-          style={{ height: "70vh" }}
           center={
             error ? [51.505, -0.09] : [ipData.location.lat, ipData.location.lng]
           }

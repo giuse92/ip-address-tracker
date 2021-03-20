@@ -105,6 +105,10 @@
   font-weight: 700;
 }
 
+.leaflet-container {
+  height: 70vh;
+}
+
 .attribution {
   font-size: 11px;
   text-align: center;
@@ -112,4 +116,81 @@
 }
 .attribution a {
   color: hsl(228, 45%, 44%);
+}
+
+@media only screen and (min-width: 817px) and (max-width: 1000px) {
+  .App .search-ip .show-tracker-data {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 816px) {
+  .App .search-ip .show-tracker-data ul li .data-key {
+    font-size: 12px;
+  }
+
+  .App .search-ip .show-tracker-data ul li .data-value {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 426px) and (max-width: 768px) {
+  .App .search-ip .show-tracker-data ul li .data-key {
+    font-size: 10px;
+  }
+
+  .App .search-ip .show-tracker-data ul li .data-value {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .App .search-ip {
+    padding-bottom: 130px;
+  }
+
+  .App .search-ip form {
+    width: 84%;
+  }
+
+  .App .search-ip form input {
+    height: 29px;
+    width: 300px;
+    font-size: 14px;
+  }
+
+  .App .search-ip form button {
+    height: 50px;
+  }
+
+  .App .search-ip .show-tracker-data {
+    position: absolute;
+    width: 84%;
+    top: 185px;
+    padding: 0;
+  }
+
+  .App .search-ip .show-tracker-data ul {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .App .search-ip .show-tracker-data ul li {
+    border-right: none;
+  }
+
+  .App .search-ip .show-tracker-data ul li .data-key {
+    margin-top: 0;
+    font-size: 8px;
+  }
+
+  .App .search-ip .show-tracker-data ul li .data-value {
+    margin-top: 0;
+    font-size: 14px;
+  }
+
+  .leaflet-container {
+    height: 100vh;
+  }
 }
